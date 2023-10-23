@@ -1,0 +1,341 @@
+.login{
+    position: absolute;
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    background-color: #081426dc;
+    z-index: 5;
+    align-items: center;
+    justify-content: center;
+    animation: login-signup 500ms 1;
+}
+@keyframes login-signup {
+    0%{
+        width: 1vw;
+        height: 100vh;
+    }
+    100%{
+        height: 100vh;
+        width: 100vw;
+    }
+}
+
+.login-div{
+    /*display: grid;*/
+    height: 350px;
+    width: 400px;
+    background-color: #9a9a9a;
+    grid-template-rows: repeat(21, 1fr);
+    border-radius: 20px;
+    animation: login-anim 1000ms 1;
+}
+
+@keyframes login-anim {
+    0%{
+        transform:translateX(-100vw)
+    }
+    100%{
+        transform:translateX(0)
+    }
+}
+
+.kryss{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #166fae;
+    width: 30px;
+    height: 30px;
+    font-size: 1.3em;
+    font-weight: 600;
+    margin-left: 365px;
+    margin-top: 5px;
+}
+.kryss:hover{
+    font-size: 1.6em;
+    font-weight: 650;
+    cursor: pointer;
+    animation: kryss-anim 200ms 1;
+}
+
+@keyframes kryss-anim {
+    0%{
+        font-size: 1.3em;
+        font-weight: 600;
+    }
+    100%{
+        font-size: 1.6em;
+        font-weight: 650;
+    }
+}
+
+.login-header, .login-input, .login-signup, .login-google{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    animation: login-anim 500ms 1;
+}
+
+.login-header,.login-google,.login-signup {
+    align-items: center;
+}
+
+.login-header{
+    grid-row: 1 / span 3;
+}
+
+.login-header-text{
+    color: #166fae;
+    font-size: 1.4em;
+    font-weight: 550;
+}
+
+.login-input{
+    grid-row: 4 / span 9;
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    width: 100%;
+}
+.username, .password{
+    width: 320px;
+    height: 45px;
+    outline-width: 0px;
+    margin-top: 5px;
+    text-align: center;
+    background-color:#5c6569;
+    color: #a4c3cb;
+    font-size: 0.85em;
+    font-weight: 500;
+    border-radius: 10px;
+    border-color:#506771;
+    border-width: 2px;
+    border-style: solid;
+}
+
+.username::placeholder, .password::placeholder{
+    color: #b5d6df;
+    user-select: none;
+}
+
+.username:hover, .password:hover{
+    animation: searchhover-login 100ms 1;
+    border-color:#668491;
+    border-width: 2px;
+}
+
+@keyframes searchhover-login {
+    0%{
+      border-color:#506771;
+    }
+    100%{
+      border-color:#668491;
+      border-width: 2px;
+    }
+}
+
+.username:hover::placeholder, .password:hover::placeholder{
+    color: #a4c3cb;
+}
+
+.username:focus, .password:focus{
+    color: #b5d6df;
+    font-size: 0.75em;
+    font-weight: 470;
+}
+
+.login-input-btn{
+    width: 320px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #3f82b1;
+    border-radius: 10px;
+    margin-top: 5px;
+}
+
+.login-input-btn-text{
+    color: #c6e7f1;
+    font-size: 1em;
+    font-weight: 500;
+    user-select: none;
+}
+
+.login-input-btn:hover{
+    animation: change-color-login1 200ms 1;
+    background-color:#c6e7f17a;
+    user-select: none;
+    cursor: pointer;
+}
+
+
+@keyframes change-color-login1 {
+    0%{
+      background-color:#3f82b1;
+    }
+    100%{
+      background-color:#c6e7f17a;
+    }
+}
+
+.login-input-btn:hover .login-input-btn-text{
+    animation: change-color-login2 200ms 1;
+    color: #484848;
+    font-size: 1.05em;
+    font-weight: 500;
+}
+
+@keyframes change-color-login2 {
+    0%{
+        color: #c6e7f1;
+        font-size: 1em;
+        font-weight: 500;
+    }
+    100%{
+        color: #484848;
+        font-size: 1.05em;
+        font-weight: 500;
+    }
+}
+
+.login-forgot{
+    grid-row: 13 / span 2;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.login-forgot-div{
+    width: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-forgot-div{
+    cursor: pointer;
+}
+
+.login-forgot-text{
+    font-size: 1em;
+    color: #000000;
+    text-align: center;
+    text-decoration: underline;
+}
+
+.login-forgot-div:hover .login-forgot-text{
+    color: #303030;
+}
+
+
+.login-google{
+    grid-row: 16 / span 3;
+    align-items: center;
+    background-color:none;
+}
+
+.login-google-btn{
+    width: 320px;
+    height: 80%;
+    display: flex;
+    align-items: center;
+    background-color: #e4e4e4;
+    border-radius: 3px;
+}
+
+.login-google-img-div{
+    float:left;
+    width: 60px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.login-google-btn:hover{
+    cursor: pointer;
+    background-color: #f1f1f1;
+}
+.login-google-img{
+    width: 40px;
+    height: 40px;
+}
+.login-google-text{
+    float: right;
+    font-size: 1em;
+    font-weight: 500;
+    text-align: center;
+    width:200px ;
+}
+
+
+.login-signup{
+    grid-row: 19 / span 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-signup-btn{
+    width: 320px;
+    height: 70%;
+    background-color: #3f82b1;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.login-signup-btn-text{
+    color: #b5d6df;
+    font-size: 1em;
+    font-weight: 550;
+    user-select: none;
+}
+
+.login-signup-btn:hover .login-signup-btn-text{
+    animation: change-color-login3 200ms 1;
+    color: #484848;
+    font-size: 1.05em;
+    font-weight: 550;
+}
+
+@keyframes change-color-login3 {
+    0%{
+        color: #b5d6df;
+        font-size: 1em;
+        font-weight: 550;
+    }
+    100%{
+        color: #484848;
+        font-size: 1.05em;
+        font-weight: 550;
+    }
+}
+
+.login-signup-btn:hover{
+    animation: change-color-login4 200ms 1;
+    background-color:#c6e7f17a;
+    user-select: none;
+    cursor: pointer;
+}
+
+@keyframes change-color-login4 {
+    0%{
+      background-color:#3f82b1;
+    }
+    100%{
+      background-color:#c6e7f17a;
+    }
+}
+
+
+
+@media screen and (max-width: 500px) {
+    .login-div{
+        /*display: grid;*/
+        width: 340px;
+    }
+    .kryss{
+        margin-left: 305px;
+    }
+}

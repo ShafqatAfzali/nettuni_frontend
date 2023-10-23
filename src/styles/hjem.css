@@ -1,0 +1,138 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+.hjem{
+    height: 100vh;
+    width: 100vw;
+    background: linear-gradient(to bottom, #484848,#9a9a9a,#83a3b3);
+}
+  
+.search-sec{
+  height: 100vh;
+  width: 100vw;
+}
+
+.searchbar{
+  height: 35px;
+  width: 40vw;
+  background-color:#5c6569;
+  border-radius: 20px;
+  border-color:#506771;
+  border-width: 2px;
+  border-style: solid;
+  position: absolute;
+  top: 320px;
+  left: 30vw;
+  color: #b5d6df;
+  outline-width: 0px;
+  text-align: center;
+  font-size: 1.1em;
+  font-weight: 500;
+  z-index: 2;
+}
+
+.searchbar::placeholder{
+  color: #b5d6df;
+  font-size: 0.8em;
+  font-weight: 400;
+  user-select: none;
+}
+
+.searchbar:hover{
+  animation: searchhover 100ms 1;
+  border-color:#668491;
+  border-width: 2px;
+}
+  
+@keyframes searchhover {
+  0%{
+    border-color:#506771;
+  }
+  100%{
+    border-color:#668491;
+    border-width: 2px;
+  }
+}
+  
+.searchbar:hover::placeholder{
+  color: #a4c3cb;
+}
+  
+.searchbar:focus{
+  color: #b5d6df;
+  font-size: 1.1em;
+  font-weight: 500;
+}
+  
+.search-btn{
+  height: 32px;
+  width: 31px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 323px;
+  left: calc(70vw - 29px);
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border-top-width: 0px;
+  border-right-width: 0px;
+  border-bottom-width: 0px;
+  background-color: #5c6569;
+  border-left-width: 2px;
+  border-left-color: #506771;
+  border-left-style: solid;
+  z-index: 2;
+}
+  
+.search-btn:hover{
+  background-color: #535f64;
+  cursor: pointer;
+}
+  
+.search-svg{
+  height: 20px;
+  width: 20px;
+}
+  
+.search-svg-circle, .search-svg-line{
+  stroke: #b5d6df ;
+}
+
+
+
+
+
+
+@media screen and (max-width: 800px) {
+  .searchbar{
+    width: 60vw;
+    left: 20vw;
+  }
+
+  .search-btn{
+    height: 32px;
+    width: 31px;
+    left: calc(80vw - 29px);
+  }
+
+}
+
+
+
+
+
+@media screen and (max-width: 320px) {
+  .searchbar{
+    width: 80vw;
+    left: 10vw;
+  }
+
+  .search-btn{
+    height: 32px;
+    width: 31px;
+    left: calc(90vw - 29px);
+  }
+}
