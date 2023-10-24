@@ -1,8 +1,3 @@
-.loading-text{
-    font-size: 3em;
-    font-weight: 700;
-}
-
 body{
     overflow-x: hidden;
 }
@@ -22,7 +17,7 @@ body::-webkit-scrollbar-thumb:hover{
 .search-hjem{
     width: calc(100vw -8px);
     height: 1070px;
-    background:linear-gradient(to bottom, #484848,#848484,#d8d8d8);
+    background:linear-gradient(to bottom, #484848,#848484,#767676);
 }
 
 .search-div{
@@ -41,6 +36,13 @@ body::-webkit-scrollbar-thumb:hover{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     background-color: #484848;
+}
+
+.search-result-div{
+    position: absolute;
+    top: 60px;
+    height:940px;
+    width: 100%;
 }
 
 .search-nav-left{
@@ -189,6 +191,124 @@ body::-webkit-scrollbar-thumb:hover{
     
 .searchbar-svg-circle, .searchbar-svg-line{
     stroke: #b5d6df ;
+}
+
+.search-result{
+    height: 940px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+}
+
+.result-div{
+    display: grid;
+    height: 100%;
+    width: 100%;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+
+.result-elem-div{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-row: span 1;
+    grid-column: span 1;
+}
+
+.result-elem{
+    grid-row: 1fr;
+    grid-column: 1fr;
+    display: grid;
+    grid-template-rows: repeat(2,1fr);
+    height: 80%;
+    width: 80%;
+    background: linear-gradient(to top, #15262e, #57575748);
+    box-shadow: inset 0 5px 3px #2f3c47e7;
+    border-radius: 15px;
+    animation: result-smaller 200ms 1;
+}
+
+@keyframes result-smaller {
+    0%{
+        height: 100%;
+        box-shadow: 0 0 5px 3px #304758e7;
+    }
+
+    100%{
+        height: 80%;
+        box-shadow: inset 0 5px 3px #304758e7;
+    }
+}
+
+.result-elem:hover{
+    cursor: pointer;
+    height: 100%;
+    animation: result-bigger 200ms 1;
+    box-shadow: 0 0 5px 3px #304758e7;
+}
+
+@keyframes result-bigger {
+    0%{
+        height: 80%;
+        box-shadow: inset 0 5px 3px #304758e7;
+    }
+
+    100%{
+        height: 100%;
+        box-shadow: 0 0 5px 3px #304758e7;
+    }
+}
+
+.result-elem:hover .desc ,.result-elem:hover .rating{
+    display: block;
+}
+
+.course-img{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-row: 1 / span 1;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+}
+
+.course-info{
+    height: 100%;
+    width: 100%;
+}
+
+.image{
+    width: 100%;
+    height: 100%;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+
+.desc, .rating{
+    display: none;
+}
+
+.loading{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.loading-text{
+    font-size: 3em;
+    font-weight: 700;
 }
 
 

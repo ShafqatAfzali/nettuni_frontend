@@ -114,16 +114,33 @@ export default function Search(){
 
 
             <div className='search-result-div'>
+
                 <div className='search-result'>
 
                 {loading ? 
-                    <div className='loading'><p className='loading-text'>loading SVG/animation</p></div> : 
-                    <div className='search-result-elem' style={{display:"grid"}}>
-                        {data.map((kurs)=>{return <div key={`${kurs.name}`}> <h3>name: {kurs.name}</h3></div>})}
+                    <div className='loading'><p className='loading-text'>loading...</p></div> : 
+                    <div className='result-div'>
+                        
+                        {data.map((kurs)=>{return <div key={`${kurs.name}`} className='result-elem-div'>
+                            <div className='result-elem'> 
+
+                                <div className='course-img'><img src={require('../bilder/sfqt.jpg')} alt='course image' className='image'/></div>
+                                <div className='course-inf'>
+                                    <div className='name'><p className='name-text'>{kurs.name}</p></div>
+                                    <div className='price'><p className='price-text'>price: {kurs.price}</p></div>
+                                    <div className='rating'><p>rating: {kurs.rating}</p></div>
+                                    <div className='desc'><p>{kurs.desc}</p></div>
+                                </div>
+
+                            </div>
+
+                        </div>})}
+
                     </div>
                 }
                 
                 </div>
+
             </div>
             
         </div>
