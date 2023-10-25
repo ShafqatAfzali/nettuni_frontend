@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
-import { useLocation, useSearchParams } from 'react-router-dom'
+import { useLocation, useSearchParams, useNavigate } from 'react-router-dom'
 
 import "../styles/search.css"
 
@@ -15,8 +15,11 @@ export default function Search(){
     const search_params=new URLSearchParams(location.search)
     const query=search_params.get("q")
     const [searchParams, setsearchParams]=useSearchParams()
+    const navigate = useNavigate();
 
-
+    function redirect_course(id){
+        navigate(`/course/${id}`)
+    }
 
     async function search_course(){
         setsearchParams({q:search})
@@ -122,7 +125,7 @@ export default function Search(){
                     <div className='result-div'>
                         
                         {data.map((kurs)=>{return <div key={`${kurs.name}`} className='result-elem-div'>
-                            <div className='result-elem'> 
+                            <div className='result-elem' onClick={()=>{redirect_course(kurs.courseID)}}> 
 
                                 <div className='course-img'><img src={require('../bilder/sfqt.jpg')} alt='course image' className='image'/></div>
                                 <div className='course-inf'>
