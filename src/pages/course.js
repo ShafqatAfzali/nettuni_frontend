@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"
+import { useParams } from "react-router-dom";
+
+import Navbar from "./parts/navbar";
 
 export default function Course(){
     const {id} = useParams();
@@ -19,7 +21,7 @@ export default function Course(){
         }
 
         get_course().then(()=>{setloading(false)})
-    },[])
+    },[id])
 
 
     return <div>
@@ -27,7 +29,7 @@ export default function Course(){
         {loading ? <div><h1>loading...</h1></div> : 
         
         <div>
-        
+
         <h3>name:{courseDT.name}</h3>
         <h3>price:{courseDT.price}</h3>
         <h3>rating:{courseDT.rating}</h3>

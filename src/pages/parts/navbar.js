@@ -105,6 +105,12 @@ export default function Navbar(){
                             <div className="courses-elem">
                             <p className="courses-elem-text">medicine</p>
                             </div>
+                            <div className="courses-elem">
+                            <p className="courses-elem-text">economics</p>
+                            </div>
+                            <div className="courses-elem">
+                            <p className="courses-elem-text">other</p>
+                            </div>
                         </div>
                     </div>
                     
@@ -216,6 +222,16 @@ export default function Navbar(){
                     <div className="burger-courses-elem">
                         <div className="burger-text-div">
                             <p className="burger-courses-elem-text">medicine</p>
+                        </div>
+                    </div>
+                    <div className="burger-courses-elem">
+                        <div className="burger-text-div">
+                            <p className="burger-courses-elem-text">economics</p>
+                        </div>
+                    </div>
+                    <div className="burger-courses-elem">
+                        <div className="burger-text-div">
+                            <p className="burger-courses-elem-text">other</p>
                         </div>
                     </div>
         

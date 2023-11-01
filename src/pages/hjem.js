@@ -12,12 +12,12 @@ export default function Hjem(){
 
 
     async function search_course(){
-        navigate(`/search?q=${search}`)
+        navigate(`/search?q=${search}&p=1`)
     }
 
     function keydown_search(event){
         if(event.key==="Enter"){
-            navigate(`/search?q=${search}`)
+            navigate(`/search?q=${search}&p=1`)
         }
     }
     
