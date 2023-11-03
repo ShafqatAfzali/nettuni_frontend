@@ -9,7 +9,7 @@ function App() {
     <>
     <Routes>
       <Route path='/' element={<Hjem/>} />
-      <Route path='/search' element={<Search/>} />
+      <Route path='/search?' element={<Search/>} />
       <Route path='/course/:id' element={<Course/>} />
 
       <Route path='*' element={<Exist/>} />

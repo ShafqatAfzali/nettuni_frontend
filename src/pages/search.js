@@ -13,6 +13,14 @@ export default function Search(){
     const [price_disp,setprice_disp]=useState(false)
     const [rating_disp,setrating_disp]=useState(false)
     const [sort_select, setsort_select]=useState();
+    const [topic_select, settopic_select]=useState();
+    const [min_price, setmin_price]=useState();
+    const [max_price, setmax_price]=useState();
+    const [min_rating, setmin_rating]=useState();
+    const [max_rating, setmax_rating]=useState();
+    const [priceF, setpriceF]=useState(true);
+    const [ratingF, setratingF]=useState(true);
+
 
     const location = useLocation();
     const search_params=new URLSearchParams(location.search)
@@ -86,20 +94,78 @@ export default function Search(){
 
                 <div className='search-nav'>
 
-                    <div className='search-nav-left price' onClick={()=>{setprice_disp(!price_disp); setrating_disp(false)}}>
-                        <p className='price-text'>price</p>
-
-                        <div className='price-div' style={{display:price_disp ? "flex":"none"}}>
-                            
+                    <div className='search-nav-left price'>
+                        
+                        <div className='price-disp' onClick={()=>{setprice_disp(!price_disp); setrating_disp(false); setpriceF(true)}}>
+                            <p className='price-text' >price</p>
+                        </div>
+                        
+                        <div className='price-div' style={{display:price_disp ? "grid":"none"}}>
+                            <div className='price-input-div'>
+                                <input className='min_price' value={min_price} onChange={(e)=>{
+                                    if(isNaN(Number(e.target.value)) || Number(e.target.value)<0 || Number(e.target.value)>150){
+                                        setpriceF(false)
+                                    }
+                                    else{
+                                        setpriceF(true)
+                                        setmin_price(e.target.value)
+                                    }
+                                    }} placeholder='min $' style={{borderColor:priceF?"#506771":"#715050"}}/>
+                            </div>
+                            <div className='price-input-div'>
+                                <input className='max_price' value={max_price} onChange={(e)=>{
+                                    if(isNaN(Number(e.target.value)) || Number(e.target.value)<0 || Number(e.target.value)>250){
+                                        setpriceF(false)
+                                    }else if(Number(min_price)>=Number(e.target.value)){
+                                        setpriceF(false)
+                                        setmax_price(e.target.value)
+                                    }
+                                    else{
+                                        setpriceF(true)
+                                        setmax_price(e.target.value)
+                                    }
+                                }} placeholder='max $' style={{borderColor:priceF?"#506771":"#715050"}} />
+                            </div>
                         </div>
 
                     </div>
 
-                    <div className='search-nav-left rating' onClick={()=>{setrating_disp(!rating_disp); setprice_disp(false)}}>
-                        <p className='rating-text'>rating</p>
+                    <div className='search-nav-left rating'>
 
-                        <div className='rating-div' style={{display:rating_disp ? "flex":"none"}}>
-                            
+                        <div className='rating-disp' onClick={()=>{setrating_disp(!rating_disp); setprice_disp(false); setratingF(true)}}>
+                            <p className='rating-text'>rating</p>
+                        </div>
+
+                        <div className='rating-div' style={{display:rating_disp ? "grid":"none"}}>
+                            <div className='rating-input-div'>
+                                <input className='min_rating' value={min_rating} 
+                                onChange={(e)=>{
+                                    if(isNaN(Number(e.target.value)) || Number(e.target.value)<0 || Number(e.target.value)>10){
+                                        setratingF(false)
+                                    }
+                                    else{
+                                        setratingF(true)
+                                        setmin_rating(e.target.value)
+                                    }
+                                }} placeholder='min' style={{borderColor:ratingF?"#506771":"#715050"}}/>
+                            </div>
+
+                            <div className='rating-input-div'>
+                                <input className='max_rating' value={max_rating}
+                                onChange={(e)=>{
+                                    if(isNaN(Number(e.target.value)) || Number(e.target.value)<0 || Number(e.target.value)>10){
+                                        setratingF(false)
+                                    } else if(Number(min_rating)>=Number(e.target.value)){
+                                        setratingF(false)
+                                        setmax_rating(e.target.value)
+                                    }
+                                    else{
+                                        setratingF(true)
+                                        setmax_rating(e.target.value)
+                                    }
+                                }}
+                                placeholder='max' style={{borderColor:ratingF?"#506771":"#715050"}} />  
+                            </div>  
                         </div>
 
                     </div>
@@ -132,7 +198,7 @@ export default function Search(){
                     </div>
 
                     <div className='search-nav-right topic'>
-                        <select className='topic-select' value={sort_select} onChange={(e)=>{setsort_select(e.target.value)}}>
+                        <select className='topic-select' value={topic_select} onChange={(e)=>{settopic_select(e.target.value)}}>
                             <option>Topic</option>
                             <option>math</option>
                             <option>physics</option>
@@ -165,16 +231,20 @@ export default function Search(){
                                 <div className='course-img'><img src={require('../bilder/sfqt.jpg')} alt='course image' className='image'/></div>
                                 <div className='course-inf'>
                                     <div className='course-hoved-inf'>
-                                        <div className='course-hoved-inf-div'>
                                             <div className='name'><p className='name-text'>{kurs.name}</p></div>
-                                            <div className='result-price'><p className='result-price-text'>price: {kurs.price}</p></div>
-                                        </div>
+                                            <div className='pogr'>
+                                                <div className='result-rating'>
+                                                    <p className='result-rating-text'>{kurs.rating}/10</p>
+                                                    <svg width="42" height="42" viewBox="0 0 42 42" fill="none" className='stjerne-svg'>
+                                                        <path d="M17.1456 16.4432L20.0298 4.88742C20.282 3.87696 21.718 3.87696 21.9702 4.88742L24.8544 16.4432C24.944 16.8022 25.2245 17.0824 25.5836 17.1716L37.1049 20.0327C38.1161 20.2838 38.1172 21.7207 37.1065 21.9734L25.5821 24.8545C25.2238 24.944 24.944 25.2238 24.8545 25.5821L21.9701 37.1194C21.7177 38.1294 20.2823 38.1294 20.0299 37.1194L17.1455 25.5821C17.056 25.2238 16.7762 24.944 16.4179 24.8545L4.89355 21.9734C3.88278 21.7207 3.88391 20.2838 4.89508 20.0327L16.4164 17.1716C16.7755 17.0824 17.056 16.8022 17.1456 16.4432Z" className='stjerne'/>
+                                                    </svg>
+                                                </div>
+                                                <div className='result-price'><p className='result-price-text'>{kurs.price}$</p></div>
+                                            </div>
+                                        
                                     </div>
                                     <div className='course-sub-inf'>
-                                        <div className='course-sub-inf-div'>
-                                            <div className='result-rating'><p>rating: {kurs.rating}</p></div>
-                                            <div className='desc'><p>{kurs.desc}</p></div>
-                                        </div>
+                                        <div className='desc'><p className='desc-text'>{kurs.desc}</p></div>
                                     </div>
                                 </div>
 

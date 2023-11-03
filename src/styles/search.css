@@ -27,7 +27,7 @@ body::-webkit-scrollbar-thumb:hover{
     width: 100%;
     height: 2000px;
     /*background:linear-gradient(to bottom, #484848,#848484);*/
-    background: linear-gradient(to bottom,#a9bac5,#dce1e4, #dce2e6,white,white,white,white,white,white,white,white, white,white,white);
+    background: linear-gradient(to bottom,#a9bac5,#dce1e4, #dce2e6,#dce2e6,#dce1e4,#a9bac5);
 }
 
 
@@ -96,7 +96,13 @@ body::-webkit-scrollbar-thumb:hover{
 }
 
 
-.price, .rating{
+
+.price-disp, .rating-disp{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
 }
 
@@ -119,7 +125,7 @@ body::-webkit-scrollbar-thumb:hover{
     }
 }
 
-.price:hover .price-text, .rating:hover .rating-text{
+.price-disp:hover .price-text, .rating-disp:hover .rating-text{
     color: #818181;
     animation: change-color5 300ms 1;
 }
@@ -196,10 +202,11 @@ body::-webkit-scrollbar-thumb:hover{
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    margin-left: -2px;
 }
 
 .searchbar-btn{
-    height: 32px;
+    height: 34px;
     width: 31px;
     display: flex;
     justify-content: center;
@@ -255,6 +262,61 @@ body::-webkit-scrollbar-thumb:hover{
 }
 
 
+.price-div, .rating-div{
+    position:absolute;
+    height: 100px;
+    top: 60px;
+    width: 15%;
+    grid-template-rows: repeat(2, 1fr);
+    background-color: #484848;
+    z-index: 2;
+    animation: filter-anim 300ms 1;
+}
+
+@keyframes filter-anim {
+    0%{
+        top: 10px;
+        transform: scaleY(0.1);
+    }
+    100%{
+        top: 60px;
+        transform: scaleY(1);
+    }
+}
+
+.price-input-div, .rating-input-div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.min_price, .max_price, .min_rating, .max_rating{
+    background-color:#5c6569;
+    height: 28px;
+    width: 80%;
+    outline-width: 0px;
+    border-radius: 5px;
+    border-color:#506771;
+    border-width: 2px;
+    border-style: solid;
+    color: #b5d6df;
+    outline-width: 0px;
+    text-align: center;
+    font-size: 0.8em;
+    font-weight: 450;
+}
+
+.min_price::placeholder, .max_price::placeholder,.min_rating::placeholder,.max_rating::placeholder {
+    color: #b5d6df;
+    text-align: center;
+    font-size: 0.9em;
+    font-weight: 450;
+}
+
+
+
 
 
 
@@ -289,10 +351,10 @@ body::-webkit-scrollbar-thumb:hover{
     grid-row: 1fr;
     grid-column: 1fr;
     display: grid;
-    grid-template-rows: repeat(2,1fr);
+    grid-template-rows: repeat(3,1fr);
     height: 80%;
     width: 80%;
-    background: #1881CC;
+    background: #124a72;
     box-shadow: inset 0 5px 3px #5b8bb5;
     border-radius: 15px;
 }
@@ -302,6 +364,7 @@ body::-webkit-scrollbar-thumb:hover{
     height: 100%;
     width: 100%;
     box-shadow: 0 0 5px 3px #304758;
+    grid-template-rows: repeat(2,1fr);
 }
 
 @keyframes result-bigger {
@@ -325,7 +388,7 @@ body::-webkit-scrollbar-thumb:hover{
     display: flex;
     align-items: center;
     justify-content: center;
-    grid-row: 1 / span 1;
+    grid-row: 1 / span 2;
     border-top-right-radius: 15px;
     border-top-left-radius: 15px;
 }
@@ -343,28 +406,78 @@ body::-webkit-scrollbar-thumb:hover{
 .course-info{
     height: 100%;
     width: 100%;
+    grid-row: 3 / span 1;
 }
 
 .course-hoved-inf{
     height: 100%;
     width: 100%;
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+}
+
+
+.name{
+    grid-row: span 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.name-text{
+    font-size: 1.1em;
+    font-weight: 550;
+    color:#c1c1c1;
+}
+
+
+.pogr{
+    grid-row: span 1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    height: 100%;
+    width: 80%;
+    position: relative;
+    left: 10%;
+}
+
+.result-price, .result-rating{
+    grid-column: span 1;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.course-hoved-inf-div{
-    display: grid;
-    grid-template-columns: repeat(2,1fr);
+.result-price-text,.result-rating-text{
+    font-size: 1.08em;
+    font-weight: 500;
+    color:#c1c1c1;
+}
+
+.stjerne-svg{
+    height: 20px;
+    width: 20px;
+}
+.stjerne{
+    fill: #b3c117;
+}
+
+
+
+.result-elem:hover .course-img{
+    grid-row: 1 / span 1;
 }
 
 .result-elem:hover .course-inf{
     display: grid;
-    grid-template-rows: repeat(4, 1fr);
+    grid-row: 2 / span 1;
+    grid-template-rows: repeat(5, 1fr);
 }
 
 .result-elem:hover .course-hoved-inf{
-    grid-row: 1 / span 1;
+    grid-row: 1 / span 2;
 }
 
 
@@ -374,11 +487,25 @@ body::-webkit-scrollbar-thumb:hover{
     width: 100%;
     align-items: center;
     justify-content: center;
-    grid-row: 2/ span 3;
+    grid-row: 3/ span 3;
 }
 
 .course-sub-inf{
     display: none;
+}
+
+.desc{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.desc-text{
+    font-size: 1.04em;
+    font-weight: 500;
+    color:#c1c1c1;
 }
 
 
