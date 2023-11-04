@@ -98,6 +98,9 @@ export default function Search(){
                         
                         <div className='price-disp' onClick={()=>{setprice_disp(!price_disp); setrating_disp(false); setpriceF(true)}}>
                             <p className='price-text' >price</p>
+                            <svg width="15" height="15" viewBox="0 0 18 18" fill="none" className="pil-ned-sort">
+                                <path d="M8 13L3.66987 1.75L12.3301 1.75L8 13Z" className="pil_ned pil-courses"/>
+                            </svg>
                         </div>
                         
                         <div className='price-div' style={{display:price_disp ? "grid":"none"}}>
@@ -134,6 +137,9 @@ export default function Search(){
 
                         <div className='rating-disp' onClick={()=>{setrating_disp(!rating_disp); setprice_disp(false); setratingF(true)}}>
                             <p className='rating-text'>rating</p>
+                            <svg width="15" height="15" viewBox="0 0 18 18" fill="none" className="pil-ned-sort">
+                                <path d="M8 13L3.66987 1.75L12.3301 1.75L8 13Z" className="pil_ned pil-courses"/>
+                            </svg>
                         </div>
 
                         <div className='rating-div' style={{display:rating_disp ? "grid":"none"}}>
@@ -174,7 +180,7 @@ export default function Search(){
 
                         <div className="searchbar-div" onKeyDown={keydown_search}>
 
-                            <input type="text" placeholder="search courses" className="searchbar-input" value={search} onChange={(e)=>{ setsearch(e.target.value)}} />
+                            <input type="text" placeholder="search courses" className="searchbar-input" value={search} onChange={(e)=>{ setsearch(e.target.value)}} onClick={()=>{setprice_disp(false); setrating_disp(false)}}/>
 
                             <div className='searchbar-btn-div'>
                                 <button className="searchbar-btn" onClick={search_course}>
@@ -189,7 +195,7 @@ export default function Search(){
                     </div>
 
                     <div className='search-nav-right sort'>
-                        <select className='sort-select' value={sort_select} onChange={(e)=>{setsort_select(e.target.value)}}>
+                        <select className='sort-select' value={sort_select} onChange={(e)=>{setsort_select(e.target.value)}} onClick={()=>{setprice_disp(false); setrating_disp(false)}}>
                             <option>sort by</option>
                             <option>lowest price</option>
                             <option>highest price</option>
@@ -198,7 +204,7 @@ export default function Search(){
                     </div>
 
                     <div className='search-nav-right topic'>
-                        <select className='topic-select' value={topic_select} onChange={(e)=>{settopic_select(e.target.value)}}>
+                        <select className='topic-select' value={topic_select} onChange={(e)=>{settopic_select(e.target.value)}} onClick={()=>{setprice_disp(false); setrating_disp(false)}}>
                             <option>Topic</option>
                             <option>math</option>
                             <option>physics</option>
@@ -223,7 +229,7 @@ export default function Search(){
 
                 {loading ? 
                     <div className='loading'><p className='loading-text'>loading...</p></div> : 
-                    <div className='result-div'>
+                    <div className='result-div' onClick={()=>{setprice_disp(false); setrating_disp(false)}}>
                         
                         {data.map((kurs)=>{return <div key={`${kurs.name}`} className='result-elem-div'>
                             <div className='result-elem' onClick={()=>{redirect_course(kurs.courseID)}}> 
@@ -262,24 +268,25 @@ export default function Search(){
             <div className='page-nav'>
                 <table>
                     <tr>
-                        <td>
+                        <td className='page-number' style={{color:"#dce1e4"}}>
                             1
                         </td>
-                        <td>
+                        <td className='page-number'>
                             2
                         </td>
-                        <td>
+                        <td className='page-number'>
                             3
                         </td>
-                        <td>
+                        <td className='page-number'>
                             4
                         </td>
-                        <td>
-                            ...
+                        <td className='page-number'>
+                            5
                         </td>
-                        <td>
-                            13
+                        <td className='page-number'>
+                            6
                         </td>
+
                     </tr>
                 </table>
             </div>
