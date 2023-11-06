@@ -149,7 +149,7 @@ export default function Search(){
         if(!isNaN(Number(min_price)) & !isNaN(Number(max_price)) & Number(min_price)<Number(max_price)){
             setloading(true)
             async function getsearchdt(){
-                const resp = await fetch(`api/search?q=${search_query}&p=${page_query}&topic=${topic_query}&low_P=${min_price}&high_P${max_price}&low_R=${min_R_query}&high_R=${max_R_query}`,{
+                const resp = await fetch(`api/search?q=${search_query}&p=${page_query}&topic=${topic_query}&low_P=${min_price}&high_P=${max_price}&low_R=${min_R_query}&high_R=${max_R_query}`,{
                     method:"GET",
                     headers:{
                         "Accept":"application/json"
@@ -168,7 +168,7 @@ export default function Search(){
         if(!isNaN(Number(min_rating)) & !isNaN(Number(max_rating)) & Number(min_rating)<Number(max_rating)){
             setloading(true)
             async function getsearchdt(){
-                const resp = await fetch(`api/search?q=${search_query}&p=${page_query}&topic=${topic_query}&low_R=${min_rating}&high_R${max_rating}&low_P=${min_P_query}&high_P=${max_P_query}`,{
+                const resp = await fetch(`api/search?q=${search_query}&p=${page_query}&topic=${topic_query}&low_R=${min_rating}&high_R=${max_rating}&low_P=${min_P_query}&high_P=${max_P_query}`,{
                     method:"GET",
                     headers:{
                         "Accept":"application/json"
