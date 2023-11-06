@@ -10,7 +10,7 @@ export default function Course(){
 
     useEffect(()=>{
         async function get_course(){
-            const resp=await fetch(`/course/${id}`,{
+            const resp=await fetch(`/api/course/${id}`,{
                 method:"GET",
                 headers:{
                     "Accept":"application/json"

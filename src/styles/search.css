@@ -15,7 +15,7 @@ body::-webkit-scrollbar-thumb:hover{
 }
 
 .search-hjem{
-    width: calc(100vw -8px);
+    width: 100%;
     height: 1070px;
     background:linear-gradient(to bottom, #484848,#848484,#767676);
 }

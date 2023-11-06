@@ -1,9 +1,10 @@
+
 .navbar{
-background-color: none;
-height: 72px;
-width: 100vw;
-position: absolute;
-z-index: 4;
+    background-color: none;
+    height: 72px;
+    width: 100vw;
+    position: absolute;
+    z-index: 4;
 }
 
 

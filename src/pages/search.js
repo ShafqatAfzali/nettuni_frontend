@@ -5,6 +5,7 @@ import { useLocation, useSearchParams, useNavigate } from 'react-router-dom'
 import "../styles/search.css"
 
 import Navbar from './parts/navbar'
+import Loading from "./parts/loading"
 
 export default function Search(){
     const [data,setdata]=useState([])
@@ -37,7 +38,7 @@ export default function Search(){
         setsearchParams({q:search, p:1})
         setloading(true)
         async function getsearchdt(){
-            const resp = await fetch(`/search?q=${search}&p=1`,{
+            const resp = await fetch(`api/search?q=${search}&p=1`,{
                 method:"GET",
                 headers:{
                     "Accept":"application/json"
@@ -55,7 +56,7 @@ export default function Search(){
             setsearchParams({q:search, p:1})
             setloading(true)
             async function getsearchdt(){
-                const resp = await fetch(`/search?q=${search}&p=1`,{
+                const resp = await fetch(`api/search?q=${search}&p=1`,{
                     method:"GET",
                     headers:{
                         "Accept":"application/json"
@@ -71,7 +72,7 @@ export default function Search(){
 
     useEffect(()=>{
         async function getsearchdt(){
-            const resp = await fetch(`/search?q=${search_query}&p=${page}`,{
+            const resp = await fetch(`api/search?q=${search_query}&p=${page}`,{
                 method:"GET",
                 headers:{
                     "Accept":"application/json"
@@ -228,7 +229,8 @@ export default function Search(){
                 <div className='search-result'>
 
                 {loading ? 
-                    <div className='loading'><p className='loading-text'>loading...</p></div> : 
+                    <Loading/> :
+                    
                     <div className='result-div' onClick={()=>{setprice_disp(false); setrating_disp(false)}}>
                         
                         {data.map((kurs)=>{return <div key={`${kurs.name}`} className='result-elem-div'>
@@ -258,7 +260,7 @@ export default function Search(){
 
                         </div>})}
 
-                    </div>
+                    </div> 
                 }
                 
                 </div>

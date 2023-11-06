@@ -6,15 +6,15 @@ import Course from './pages/course';
 
 function App() {
   return (
-    <>
+    <div className='index'>
     <Routes>
       <Route path='/' element={<Hjem/>} />
-      <Route path='/search?' element={<Search/>} />
+      <Route path='/search' element={<Search/>} />
       <Route path='/course/:id' element={<Course/>} />
 
       <Route path='*' element={<Exist/>} />
     </Routes>
-    </>
+    </div>
   );
 }
 

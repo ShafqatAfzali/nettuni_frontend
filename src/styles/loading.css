@@ -1,0 +1,100 @@
+.loading{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background-color:none;
+}
+
+.loading-svg{
+    margin-top: 0px;
+    height: 500px;
+    width: 39%;
+    position: fixed;
+}
+
+.loading-1{
+    animation: logoanime 1000ms 1000;
+    stroke: rgba(24, 129, 204, 0);
+}
+
+@keyframes logoanime {
+    0%{
+        stroke: rgba(24, 129, 204, 1);
+    }
+
+    70%{
+        stroke: rgba(24, 129, 204, 0.1)
+    }
+    85%{
+        stroke: rgba(24, 129, 204, 0)
+    }
+}
+
+.loading-6{
+    stroke: rgba(24, 129, 204, 0);
+    animation: logoanime2 1000ms 1000;
+    fill:rgba(24, 129, 204, 0);
+}
+
+@keyframes logoanime2 {
+    0%{
+    stroke: rgba(24, 129, 204, 0);
+    fill: rgba(24, 129, 204, 0);
+    }
+
+    5%{
+        stroke: rgba(24, 129, 204, 0);
+        fill: rgba(24, 129, 204, 0);
+    }
+
+    20%{
+    stroke: rgba(24, 129, 204, 1);
+    fill: rgba(24, 129, 204, 1);
+    }
+    
+    85%{
+        stroke: rgba(24, 129, 204, 1,0.1);
+        fill: rgba(24, 129, 204, 1,0.1);
+    }
+
+    95%{
+        stroke: rgba(24, 129, 204, 0);
+        fill: rgba(24, 129, 204, 0);
+    }
+}
+
+.loading-7{
+    stroke: rgba(24, 129, 204, 0);
+    animation: logoanime3 1000ms 1000;
+    fill:rgba(24, 129, 204, 0);
+}
+
+@keyframes logoanime3 {
+    0%{
+        stroke: rgba(24, 129, 204, 0);
+        fill: rgba(24, 129, 204, 0);
+    }
+    
+    15%{
+        stroke: rgba(24, 129, 204, 0);
+        fill: rgba(24, 129, 204, 0);
+    }
+    
+    40%{
+        stroke: rgba(24, 129, 204, 1);
+        fill: rgba(24, 129, 204, 1);
+    }
+    
+    95%{
+        stroke: rgba(24, 129, 204, 1,0.1);
+        fill: rgba(24, 129, 204, 1,0.1);
+    }
+
+    100%{
+        stroke: rgba(24, 129, 204, 0);
+        fill: rgba(24, 129, 204, 0);
+    }
+}
