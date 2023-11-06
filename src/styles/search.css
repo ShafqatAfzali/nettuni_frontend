@@ -269,7 +269,7 @@ body::-webkit-scrollbar-thumb:hover{
     height: 100px;
     top: 60px;
     width: 15%;
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
     background-color: #484848;
     z-index: 2;
     animation: filter-anim 300ms 1;
@@ -293,6 +293,35 @@ body::-webkit-scrollbar-thumb:hover{
     height: 100%;
     width: 100%;
 }
+
+.confirm-div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.confirm-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80%;
+    width: 80%;
+    background-color: #3f82b1;
+}
+
+.confirm-btn-text{
+    color: #c6e7f1;
+    font-size: 0.9em;
+    font-weight: 450;
+    user-select: none;
+}
+
+.confirm-div:hover .confirm-btn{
+    cursor: pointer;
+}
+
 
 .min_price, .max_price, .min_rating, .max_rating{
     background-color:#5c6569;

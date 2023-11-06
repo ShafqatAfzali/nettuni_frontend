@@ -6,6 +6,7 @@ import "../styles/search.css"
 
 import Navbar from './parts/navbar'
 import Loading from "./parts/loading"
+import { flushSync } from 'react-dom'
 
 export default function Search(){
     const [data,setdata]=useState([])
@@ -21,12 +22,18 @@ export default function Search(){
     const [max_rating, setmax_rating]=useState();
     const [priceF, setpriceF]=useState(true);
     const [ratingF, setratingF]=useState(true);
+    const [original_data, setoriginal_data]=useState()
 
 
     const location = useLocation();
     const search_params=new URLSearchParams(location.search)
     const search_query=search_params.get("q")
-    const page=search_params.get("p")
+    const page_query=search_params.get("p")
+    const topic_query=search_params.get("topic")
+    const min_R_query=search_params.get("min_R")
+    const max_R_query=search_params.get("max_R")
+    const min_P_query=search_params.get("min_P")
+    const max_P_query=search_params.get("min_P")
     const [searchParams, setsearchParams]=useSearchParams()
     const navigate = useNavigate();
 
@@ -35,10 +42,10 @@ export default function Search(){
     }
 
     async function search_course(){
-        setsearchParams({q:search, p:1})
+        setsearchParams({q:search, p:1, topic:topic_query})
         setloading(true)
         async function getsearchdt(){
-            const resp = await fetch(`api/search?q=${search}&p=1`,{
+            const resp = await fetch(`api/search?q=${search}&p=${page_query}&topic=${topic_query}`,{
                 method:"GET",
                 headers:{
                     "Accept":"application/json"
@@ -53,10 +60,10 @@ export default function Search(){
 
     function keydown_search(event){
         if(event.key==="Enter"){
-            setsearchParams({q:search, p:1})
+            setsearchParams({q:search, p:1, topic:topic_query})
             setloading(true)
             async function getsearchdt(){
-                const resp = await fetch(`api/search?q=${search}&p=1`,{
+                const resp = await fetch(`api/search?q=${search}&p=${page_query}&topic=${topic_query}`,{
                     method:"GET",
                     headers:{
                         "Accept":"application/json"
@@ -72,7 +79,7 @@ export default function Search(){
 
     useEffect(()=>{
         async function getsearchdt(){
-            const resp = await fetch(`api/search?q=${search_query}&p=${page}`,{
+            const resp = await fetch(`api/search?q=${search_query}&p=${page_query}&topic=${topic_query}`,{
                 method:"GET",
                 headers:{
                     "Accept":"application/json"
@@ -84,6 +91,97 @@ export default function Search(){
 
         getsearchdt().then(()=>{setloading(false)});
     },[])
+
+    function fetch_topic(topic){
+        if(topic!=="topic"){
+            setloading(true);
+            setsearchParams({q:search_query, p:page_query,topic:topic});
+            async function kjør(){
+                const respons=await fetch(`/api/search?q=${search_query}&p=${page_query}&topic=${topic}`,{
+                    method:"GET",
+                    headers:{
+                        "Accept":"application/json"
+                    }
+                })
+                const data= await respons.json();
+                setdata(data)
+            }
+            kjør().then(()=>{setloading(false)})
+        } else{
+            setsearchParams({q:search_query, p:page_query});
+        }
+    }
+
+    async function sort(sort_method){
+        switch(sort_method){
+            case "lowest price":
+                const lowest_p=data.sort((kurs_en,kurs_to)=>kurs_en.price-kurs_to.price);
+                setdata(lowest_p);
+                break
+
+            case "highest price":
+                const highest_p=data.sort((kurs_en,kurs_to)=>kurs_to.price-kurs_en.price);
+                setdata(highest_p);
+                break
+            case "highest rating":
+                const highest_r=data.sort((kurs_en,kurs_to)=>kurs_to.rating-kurs_en.rating);
+                setdata(highest_r);
+                break
+            default : 
+                setloading(true)
+                async function getsearchdt(){
+                    const resp = await fetch(`api/search?q=${search_query}&p=${page_query}&topic=${topic_query}`,{
+                        method:"GET",
+                        headers:{
+                            "Accept":"application/json"
+                        }
+                    })
+                    const dt = await resp.json()
+                    setdata(dt)
+                }
+        
+                getsearchdt().then(()=>{setloading(false)});
+                break
+        }
+    }
+
+    function fetch_price(){
+        if(!isNaN(Number(min_price)) & !isNaN(Number(max_price)) & Number(min_price)<Number(max_price)){
+            setloading(true)
+            async function getsearchdt(){
+                const resp = await fetch(`api/search?q=${search_query}&p=${page_query}&topic=${topic_query}&low_P=${min_price}&high_P${max_price}&low_R=${min_R_query}&high_R=${max_R_query}`,{
+                    method:"GET",
+                    headers:{
+                        "Accept":"application/json"
+                    }
+                })
+                const dt = await resp.json()
+                setdata(dt)
+            }
+    
+            getsearchdt().then(()=>{setloading(false)});
+            setsearchParams({q:search_query, p:page_query, topic:topic_query, low_P:min_price, hig_P:max_price, min_R:min_R_query, max_R:max_R_query})
+        }
+    }
+
+    function fetch_rating(){
+        if(!isNaN(Number(min_rating)) & !isNaN(Number(max_rating)) & Number(min_rating)<Number(max_rating)){
+            setloading(true)
+            async function getsearchdt(){
+                const resp = await fetch(`api/search?q=${search_query}&p=${page_query}&topic=${topic_query}&low_R=${min_rating}&high_R${max_rating}&low_P=${min_P_query}&high_P=${max_P_query}`,{
+                    method:"GET",
+                    headers:{
+                        "Accept":"application/json"
+                    }
+                })
+                const dt = await resp.json()
+                setdata(dt)
+            }
+    
+            getsearchdt().then(()=>{setloading(false)});
+            setsearchParams({q:search_query, p:page_query, topic:topic_query, low_P:min_P_query, hig_P:max_P_query, min_R:min_rating, max_R:max_rating})
+        }
+    }
 
 
     return <div className='search-hjem'>
@@ -130,6 +228,11 @@ export default function Search(){
                                     }
                                 }} placeholder='max $' style={{borderColor:priceF?"#506771":"#715050"}} />
                             </div>
+                            <div className='confirm-div' onClick={()=>{setprice_disp(false); fetch_price();}}>
+                                <div className='confirm-btn'>
+                                    <p className='confirm-btn-text'>Confirm</p>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
@@ -173,6 +276,12 @@ export default function Search(){
                                 }}
                                 placeholder='max' style={{borderColor:ratingF?"#506771":"#715050"}} />  
                             </div>  
+
+                            <div className='confirm-div' onClick={()=>{setrating_disp(false); fetch_rating();}}>
+                                <div className='confirm-btn'>
+                                    <p className='confirm-btn-text'>Confirm</p>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
@@ -196,7 +305,7 @@ export default function Search(){
                     </div>
 
                     <div className='search-nav-right sort'>
-                        <select className='sort-select' value={sort_select} onChange={(e)=>{setsort_select(e.target.value)}} onClick={()=>{setprice_disp(false); setrating_disp(false)}}>
+                        <select className='sort-select' value={sort_select} onChange={(e)=>{setsort_select(e.target.value); sort(e.target.value);}} onClick={()=>{setprice_disp(false); setrating_disp(false)}}>
                             <option>sort by</option>
                             <option>lowest price</option>
                             <option>highest price</option>
@@ -205,7 +314,7 @@ export default function Search(){
                     </div>
 
                     <div className='search-nav-right topic'>
-                        <select className='topic-select' value={topic_select} onChange={(e)=>{settopic_select(e.target.value)}} onClick={()=>{setprice_disp(false); setrating_disp(false)}}>
+                        <select className='topic-select' value={topic_select} onChange={(e)=>{settopic_select(e.target.value); fetch_topic(e.target.value);}} onClick={()=>{setprice_disp(false); setrating_disp(false);}}>
                             <option>Topic</option>
                             <option>math</option>
                             <option>physics</option>
