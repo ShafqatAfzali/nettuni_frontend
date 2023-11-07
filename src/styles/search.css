@@ -557,13 +557,15 @@ body::-webkit-scrollbar-thumb:hover{
 .page-nav{
     width: 100vw;
     height: 50px;
+    margin-top: 50px;
     position: absolute;
     top:1950px;
-    display: grid;
-    align-items: flex-end;
+    display: flex;
+    align-items: center;
     justify-content: center;
     font-size: 1.2em;
     font-weight: 550;
+    background-color: #a9bac5;
 }
 
 
@@ -659,6 +661,7 @@ body::-webkit-scrollbar-thumb:hover{
 
     .page-nav{
         top:3950px;
+        margin-top: 15px;
     }
 
     .page-number{
@@ -871,25 +874,25 @@ body::-webkit-scrollbar-thumb:hover{
 
 @media screen and (max-width: 450px) {
     .search-div{
-        height: 7000px;
+        height: 12000px;
     }
 
     .search-result-div{
-        height:6880px;
+        height:11880px;
     }
 
     .search-result{
-        height: 6880px;
+        height: 11880px;
     }
     .result-div{
         top: 0px;
     }
     .page-nav{
-        top:6950px;
+        top:11950px;
     }
     .result-div{
         grid-template-columns: repeat(1, 1fr);
-        grid-template-rows: repeat(20, 1fr);
+        grid-template-rows: repeat(30, 1fr);
     }
     .page-number{
         height: 20px;

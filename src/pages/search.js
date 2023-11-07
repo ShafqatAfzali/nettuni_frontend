@@ -22,7 +22,20 @@ export default function Search(){
     const [max_rating, setmax_rating]=useState();
     const [priceF, setpriceF]=useState(true);
     const [ratingF, setratingF]=useState(true);
-    const [original_data, setoriginal_data]=useState()
+    var i=0;
+    const [antall_page, setantall_page]=useState();
+    const [page_arr,setpage_arr]=useState([]);
+    const [page,setpage]=useState(1);
+
+    useEffect(()=>{
+        var previous_page_arr=[];
+        for (i=1; i<=Number(antall_page); i++){
+            previous_page_arr.push(i)
+            console.log(i)
+        }
+        setpage_arr(previous_page_arr)
+
+    },[antall_page])
 
 
     const location = useLocation();
@@ -30,10 +43,10 @@ export default function Search(){
     const search_query=search_params.get("q")
     const page_query=search_params.get("p")
     const topic_query=search_params.get("topic")
-    const min_R_query=search_params.get("min_R")
-    const max_R_query=search_params.get("max_R")
-    const min_P_query=search_params.get("min_P")
-    const max_P_query=search_params.get("min_P")
+    const min_R_query=search_params.get("low_R")
+    const max_R_query=search_params.get("high_R")
+    const min_P_query=search_params.get("low_P")
+    const max_P_query=search_params.get("high_P")
     const [searchParams, setsearchParams]=useSearchParams()
     const navigate = useNavigate();
 
@@ -41,145 +54,78 @@ export default function Search(){
         navigate(`/course/${id}`)
     }
 
-    async function search_course(){
-        setsearchParams({q:search, p:1, topic:topic_query})
-        setloading(true)
-        async function getsearchdt(){
-            const resp = await fetch(`api/search?q=${search}&p=${page_query}&topic=${topic_query}`,{
-                method:"GET",
-                headers:{
-                    "Accept":"application/json"
-                }
-            })
-            const dt = await resp.json()
-            setdata(dt)
-        }
-
-        getsearchdt().then(()=>{setloading(false)});
-    }
-
-    function keydown_search(event){
-        if(event.key==="Enter"){
-            setsearchParams({q:search, p:1, topic:topic_query})
-            setloading(true)
-            async function getsearchdt(){
-                const resp = await fetch(`api/search?q=${search}&p=${page_query}&topic=${topic_query}`,{
-                    method:"GET",
-                    headers:{
-                        "Accept":"application/json"
-                    }
-                })
-                const dt = await resp.json()
-                setdata(dt)
-            }
-    
-            getsearchdt().then(()=>{setloading(false)});
-        }
-    }
-
-    useEffect(()=>{
-        async function getsearchdt(){
-            const resp = await fetch(`api/search?q=${search_query}&p=${page_query}&topic=${topic_query}`,{
-                method:"GET",
-                headers:{
-                    "Accept":"application/json"
-                }
-            })
-            const dt = await resp.json()
-            setdata(dt)
-        }
-
-        getsearchdt().then(()=>{setloading(false)});
-    },[])
-
-    function fetch_topic(topic){
-        if(topic!=="topic"){
-            setloading(true);
-            setsearchParams({q:search_query, p:page_query,topic:topic});
-            async function kjør(){
-                const respons=await fetch(`/api/search?q=${search_query}&p=${page_query}&topic=${topic}`,{
-                    method:"GET",
-                    headers:{
-                        "Accept":"application/json"
-                    }
-                })
-                const data= await respons.json();
-                setdata(data)
-            }
-            kjør().then(()=>{setloading(false)})
-        } else{
-            setsearchParams({q:search_query, p:page_query});
-        }
-    }
-
-    async function sort(sort_method){
+    function sort(sort_method){
         switch(sort_method){
             case "lowest price":
                 const lowest_p=data.sort((kurs_en,kurs_to)=>kurs_en.price-kurs_to.price);
                 setdata(lowest_p);
+                console.log("lowest price")
                 break
 
             case "highest price":
                 const highest_p=data.sort((kurs_en,kurs_to)=>kurs_to.price-kurs_en.price);
                 setdata(highest_p);
+                console.log("highest price")
                 break
             case "highest rating":
                 const highest_r=data.sort((kurs_en,kurs_to)=>kurs_to.rating-kurs_en.rating);
                 setdata(highest_r);
+                console.log("lowest rating")
                 break
-            default : 
-                setloading(true)
-                async function getsearchdt(){
-                    const resp = await fetch(`api/search?q=${search_query}&p=${page_query}&topic=${topic_query}`,{
-                        method:"GET",
-                        headers:{
-                            "Accept":"application/json"
-                        }
-                    })
-                    const dt = await resp.json()
-                    setdata(dt)
+        }
+    }
+
+    function general_fetch(search_q,page_q,topic_q, min_P_q,max_P_q,min_R_q,max_R_q){
+        setsearchParams({q:search_q, p:page_q, topic:topic_q, low_P:min_P_q, high_P:max_P_q, low_R:min_R_q, high_R:max_R_q});
+        setloading(true);
+
+        async function getdata(){
+            const resp = await fetch(`/api/search?q=${search_q}&p=${page_q}&topic=${topic_q}&low_P=${min_P_q}&high_P=${max_P_q}&low_R=${min_R_q}&high_R=${max_R_q}`,{
+                method:"GET",
+                headers:{
+                    "Accept":"application/json"
                 }
-        
-                getsearchdt().then(()=>{setloading(false)});
-                break
+            })
+            const dt = await resp.json()
+            setdata(dt.data);
+            setantall_page(dt.antall_page);
+        }
+
+        getdata().then(()=>{setloading(false)});
+        setsort_select("sort by");
+    }
+
+    useEffect(()=>{
+        general_fetch(search_query,page_query,topic_query,min_P_query,max_P_query,min_R_query,max_R_query);
+    },[])
+
+    function search_course(){
+        general_fetch(search,page_query,topic_query,min_P_query,max_P_query,min_R_query,max_R_query);
+    }
+
+    function keydown_search(event){
+        if(event.key==="Enter"){
+            general_fetch(search,page_query,topic_query,min_P_query,max_P_query,min_R_query,max_R_query);
+        }
+    }
+
+    function fetch_topic(topic){
+        if(topic!=="topic"){
+            general_fetch(search_query,page_query,topic,min_P_query,max_P_query,min_R_query,max_R_query);
+        } else{
+            general_fetch(search_query,page_query,"topic",min_P_query,max_P_query,min_R_query,max_R_query);
         }
     }
 
     function fetch_price(){
         if(!isNaN(Number(min_price)) & !isNaN(Number(max_price)) & Number(min_price)<Number(max_price)){
-            setloading(true)
-            async function getsearchdt(){
-                const resp = await fetch(`api/search?q=${search_query}&p=${page_query}&topic=${topic_query}&low_P=${min_price}&high_P=${max_price}&low_R=${min_R_query}&high_R=${max_R_query}`,{
-                    method:"GET",
-                    headers:{
-                        "Accept":"application/json"
-                    }
-                })
-                const dt = await resp.json()
-                setdata(dt)
-            }
-    
-            getsearchdt().then(()=>{setloading(false)});
-            setsearchParams({q:search_query, p:page_query, topic:topic_query, low_P:min_price, hig_P:max_price, min_R:min_R_query, max_R:max_R_query})
+            general_fetch(search_query,page_query,topic_query,min_price,max_price,min_R_query,max_R_query);
         }
     }
 
     function fetch_rating(){
         if(!isNaN(Number(min_rating)) & !isNaN(Number(max_rating)) & Number(min_rating)<Number(max_rating)){
-            setloading(true)
-            async function getsearchdt(){
-                const resp = await fetch(`api/search?q=${search_query}&p=${page_query}&topic=${topic_query}&low_R=${min_rating}&high_R=${max_rating}&low_P=${min_P_query}&high_P=${max_P_query}`,{
-                    method:"GET",
-                    headers:{
-                        "Accept":"application/json"
-                    }
-                })
-                const dt = await resp.json()
-                setdata(dt)
-            }
-    
-            getsearchdt().then(()=>{setloading(false)});
-            setsearchParams({q:search_query, p:page_query, topic:topic_query, low_P:min_P_query, hig_P:max_P_query, min_R:min_rating, max_R:max_rating})
+            general_fetch(search_query,page_query,topic_query,min_P_query,max_P_query,min_rating,max_rating);
         }
     }
 
@@ -342,7 +288,7 @@ export default function Search(){
                     
                     <div className='result-div' onClick={()=>{setprice_disp(false); setrating_disp(false)}}>
                         
-                        {data.map((kurs)=>{return <div key={`${kurs.name}`} className='result-elem-div'>
+                        {data.map((kurs)=>{ i++; return <div key={`${i}`} className='result-elem-div'>
                             <div className='result-elem' onClick={()=>{redirect_course(kurs.courseID)}}> 
 
                                 <div className='course-img'><img src={require('../bilder/sfqt.jpg')} alt='course image' className='image'/></div>
@@ -376,32 +322,23 @@ export default function Search(){
 
             </div>
 
-            <div className='page-nav'>
+            {loading ? <div></div> :
+                <div className='page-nav'>
                 <table>
                     <tr>
-                        <td className='page-number' style={{color:"#dce1e4"}}>
-                            1
-                        </td>
-                        <td className='page-number'>
-                            2
-                        </td>
-                        <td className='page-number'>
-                            3
-                        </td>
-                        <td className='page-number'>
-                            4
-                        </td>
-                        <td className='page-number'>
-                            5
-                        </td>
-                        <td className='page-number'>
-                            6
-                        </td>
-
+                        {page_arr.map((page_number)=>{
+                            return <td className='page-number' onClick={()=>{
+                                setpage(page_number);
+                                general_fetch(search_query,page_number,topic_query,min_P_query,max_P_query,min_R_query,max_R_query);
+                            }}>{page_number}</td>
+                        })}
                     </tr>
                 </table>
-            </div>
+                </div>
+            }
         </div>
 
     </div>
 }
+
+/*style={{color:"#dce1e4"}} */
