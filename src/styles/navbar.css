@@ -579,10 +579,10 @@ display: none;
     }
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 370px) {
     .logo-svg{
       height: 100%;
-      width: 90px;
+      width: 100px;
       float: left;
       margin-left: 0px;
     }
@@ -601,14 +601,14 @@ display: none;
   
     .login-signup-btn-nav-text{
       color: #c6e7f1;
-      font-size: 0.6em;
-      font-weight: 400;
+      font-size: 0.8em;
+      font-weight: 500;
       user-select: none;
     }
     
     .login-signup-btn-nav-box{
-      width: 80px;
-      height: 35%;
+      width: 100px;
+      height: 40%;
       background-color: #3f82b1;
       border-radius: 7px;
       display: flex;
@@ -616,6 +616,39 @@ display: none;
       align-items: center;
       float: right;
       margin-right: 5px;
+    }
+}
+
+@media screen and (max-width: 320px){
+    .logo-svg{
+        width: 95px;
+    }
+
+    .login-signup-btn-nav-text{
+        font-size: 0.7em;
+        font-weight: 400;
+    }
+
+    .login-signup-btn-nav-box{
+        width: 90px;
+        height: 36%;
+    }
+}
+
+@media screen and (max-width: 260px){
+    .logo-svg{
+        height: 100%;
+        width: 85px;
+    }
+
+    .login-signup-btn-nav-text{
+        font-size: 0.6em;
+        font-weight: 350;
+    }
+
+    .login-signup-btn-nav-box{
+        width: 80px;
+        height: 36%;
     }
 }
 

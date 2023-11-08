@@ -568,6 +568,14 @@ body::-webkit-scrollbar-thumb:hover{
     background-color: #a9bac5;
 }
 
+.course-exist{
+    position: absolute;
+    top: 150px;
+    font-size: 1.5em;
+    font-weight: 500;
+    color:#484848;
+}
+
 
 
 
@@ -580,6 +588,11 @@ body::-webkit-scrollbar-thumb:hover{
     font-weight: 450;
     text-align: center;
     border-radius: 20px;
+}
+
+.selected-page-number{
+    background-color: #a4c3cb;
+    color: #484848;
 }
 
 .page-number:hover{

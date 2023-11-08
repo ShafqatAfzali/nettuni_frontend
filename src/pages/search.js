@@ -25,7 +25,7 @@ export default function Search(){
     var i=0;
     const [antall_page, setantall_page]=useState();
     const [page_arr,setpage_arr]=useState([]);
-    const [page,setpage]=useState(1);
+    const [finns, setfinns]=useState(false);
 
     useEffect(()=>{
         var previous_page_arr=[];
@@ -43,6 +43,7 @@ export default function Search(){
     const search_query=search_params.get("q")
     const page_query=search_params.get("p")
     const topic_query=search_params.get("topic")
+    const sort_query=search_params.get("sort")
     const min_R_query=search_params.get("low_R")
     const max_R_query=search_params.get("high_R")
     const min_P_query=search_params.get("low_P")
@@ -54,33 +55,38 @@ export default function Search(){
         navigate(`/course/${id}`)
     }
 
-    function sort(sort_method){
-        switch(sort_method){
-            case "lowest price":
-                const lowest_p=data.sort((kurs_en,kurs_to)=>kurs_en.price-kurs_to.price);
-                setdata(lowest_p);
-                console.log("lowest price")
-                break
-
-            case "highest price":
-                const highest_p=data.sort((kurs_en,kurs_to)=>kurs_to.price-kurs_en.price);
-                setdata(highest_p);
-                console.log("highest price")
-                break
-            case "highest rating":
-                const highest_r=data.sort((kurs_en,kurs_to)=>kurs_to.rating-kurs_en.rating);
-                setdata(highest_r);
-                console.log("lowest rating")
-                break
+    useEffect(()=>{
+        if(search_query & search_query!=" " & search_query!="null" || search_query!=="cvhdf6vhb24n2jj"){
+            setsearch(search_query);
         }
-    }
+        if(max_P_query!=="null" & min_P_query!=="null"){
+            setmax_price(max_P_query);
+            setmin_price(min_P_query);
+        }
+        if(max_R_query!=="null" & min_R_query!=="null"){
+            setmax_rating(max_R_query);
+            setmin_rating(min_R_query);
+        }
 
-    function general_fetch(search_q,page_q,topic_q, min_P_q,max_P_q,min_R_q,max_R_q){
-        setsearchParams({q:search_q, p:page_q, topic:topic_q, low_P:min_P_q, high_P:max_P_q, low_R:min_R_q, high_R:max_R_q});
+        if(topic_query!=="Topic" & topic_query!=="null"){
+            settopic_select(topic_query);
+        }
+        if(sort_query!=="sort by" & sort_query!=="null"){
+            setsort_select(sort_query);
+        }
+    },[])
+
+    function general_fetch(search_q,page_q,topic_q,sort_q,min_P_q,max_P_q,min_R_q,max_R_q){
+        //********viktig
+        //********viktig
+        //husk sql injection prevensjon her og på back-end
+        //********viktig
+        //********viktig
+        setsearchParams({q:search_q, p:page_q, topic:topic_q,sort:sort_q,low_P:min_P_q, high_P:max_P_q, low_R:min_R_q, high_R:max_R_q});
         setloading(true);
 
         async function getdata(){
-            const resp = await fetch(`/api/search?q=${search_q}&p=${page_q}&topic=${topic_q}&low_P=${min_P_q}&high_P=${max_P_q}&low_R=${min_R_q}&high_R=${max_R_q}`,{
+            const resp = await fetch(`/api/search?q=${search_q}&p=${page_q}&topic=${topic_q}&sort=${sort_q}&low_P=${min_P_q}&high_P=${max_P_q}&low_R=${min_R_q}&high_R=${max_R_q}`,{
                 method:"GET",
                 headers:{
                     "Accept":"application/json"
@@ -89,53 +95,58 @@ export default function Search(){
             const dt = await resp.json()
             setdata(dt.data);
             setantall_page(dt.antall_page);
+            if(dt.data.length>=1){setfinns(true)}else{setfinns(false)}
         }
 
         getdata().then(()=>{setloading(false)});
-        setsort_select("sort by");
     }
 
     useEffect(()=>{
-        general_fetch(search_query,page_query,topic_query,min_P_query,max_P_query,min_R_query,max_R_query);
+        general_fetch(search_query,page_query,topic_query,sort_query,min_P_query,max_P_query,min_R_query,max_R_query);
     },[])
 
     function search_course(){
-        general_fetch(search,page_query,topic_query,min_P_query,max_P_query,min_R_query,max_R_query);
+        if(search.length>0){
+            general_fetch(search,1,topic_query,sort_query,min_P_query,max_P_query,min_R_query,max_R_query);
+        }
     }
 
     function keydown_search(event){
-        if(event.key==="Enter"){
-            general_fetch(search,page_query,topic_query,min_P_query,max_P_query,min_R_query,max_R_query);
+        if(event.key==="Enter" & search.length>0){
+            general_fetch(search,1,topic_query,sort_query,min_P_query,max_P_query,min_R_query,max_R_query);
         }
     }
 
     function fetch_topic(topic){
         if(topic!=="topic"){
-            general_fetch(search_query,page_query,topic,min_P_query,max_P_query,min_R_query,max_R_query);
+            general_fetch(search_query,1,topic,sort_query,min_P_query,max_P_query,min_R_query,max_R_query);
         } else{
-            general_fetch(search_query,page_query,"topic",min_P_query,max_P_query,min_R_query,max_R_query);
+            general_fetch(search_query,1,"topic",sort_query,min_P_query,max_P_query,min_R_query,max_R_query);
         }
+    }
+
+    function sort(sort){
+        general_fetch(search_query,1,topic_query,sort,min_P_query,max_P_query,min_R_query,max_R_query);
     }
 
     function fetch_price(){
         if(!isNaN(Number(min_price)) & !isNaN(Number(max_price)) & Number(min_price)<Number(max_price)){
-            general_fetch(search_query,page_query,topic_query,min_price,max_price,min_R_query,max_R_query);
+            general_fetch(search_query,1,topic_query,sort_query,min_price,max_price,min_R_query,max_R_query);
         }
     }
 
     function fetch_rating(){
         if(!isNaN(Number(min_rating)) & !isNaN(Number(max_rating)) & Number(min_rating)<Number(max_rating)){
-            general_fetch(search_query,page_query,topic_query,min_P_query,max_P_query,min_rating,max_rating);
+            general_fetch(search_query,1,topic_query,sort_query,min_P_query,max_P_query,min_rating,max_rating);
         }
     }
-
 
     return <div className='search-hjem'>
         <Navbar/>
 
         <div className='search-div'>
 
-            <div className='search-nav-div'>
+            <section className='search-nav-div'>
 
                 <div className='search-nav'>
 
@@ -276,17 +287,17 @@ export default function Search(){
 
                 </div>
                 
-            </div>
+            </section>
 
 
-            <div className='search-result-div'>
+            <section className='search-result-div'>
 
                 <div className='search-result'>
 
                 {loading ? 
                     <Loading/> :
                     
-                    <div className='result-div' onClick={()=>{setprice_disp(false); setrating_disp(false)}}>
+                    finns ? <div className='result-div' onClick={()=>{setprice_disp(false); setrating_disp(false)}}>
                         
                         {data.map((kurs)=>{ i++; return <div key={`${i}`} className='result-elem-div'>
                             <div className='result-elem' onClick={()=>{redirect_course(kurs.courseID)}}> 
@@ -315,30 +326,29 @@ export default function Search(){
 
                         </div>})}
 
-                    </div> 
+                    </div> : <p className='course-exist'>Course does not exist</p>
                 }
                 
                 </div>
 
-            </div>
+            </section>
 
             {loading ? <div></div> :
-                <div className='page-nav'>
+                <section className='page-nav'>
                 <table>
                     <tr>
                         {page_arr.map((page_number)=>{
-                            return <td className='page-number' onClick={()=>{
-                                setpage(page_number);
-                                general_fetch(search_query,page_number,topic_query,min_P_query,max_P_query,min_R_query,max_R_query);
+                            return <td className={`page-number ${Number(page_query) === page_number ? 'selected-page-number' : ''}`} onClick={()=>{
+                                navigate(`/search?q=${search_query}&p=${page_number}&topic=${topic_query}&sort=${sort_query}&low_P=${min_P_query}&high_P=${max_P_query}&low_R=${min_R_query}&high_R=${max_R_query}`)
+                                window.location.reload();
+                                window.scrollTo(0, 0);
                             }}>{page_number}</td>
                         })}
                     </tr>
                 </table>
-                </div>
+                </section>
             }
         </div>
 
     </div>
 }
-
-/*style={{color:"#dce1e4"}} */
