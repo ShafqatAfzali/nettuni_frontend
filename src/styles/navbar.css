@@ -1,3 +1,15 @@
+*{
+    --primary-color1:#3f82b1;
+    --primary-color2:#484848;
+    --primary-color3:#c6e7f1;
+    --secondary-color1:#9a9a9a;
+    --secondary-color2:#83a3b3;
+    --secondary-color3:#f7f7f7;
+    --tertiary-color1:#5c6569;
+    --tertiary-color2:#506771;
+    --tetriary-color3:#668491;
+}
+
 
 .navbar{
     background-color: none;
@@ -129,7 +141,7 @@ display: none;
 animation: hover-sec-ann 200ms 1 ;
 display: grid;
 position: absolute;
-background-color: #5c6569;
+background-color: var(--tertiary-color1);
 top: 72px;
 width: 31vw;
 height: 150px;
@@ -181,7 +193,7 @@ justify-content: center;
 }
 
 .courses-elem-text, .students-elem-text, .tutors-elem-text{
-    color: #b5d6df;
+    color: var(--primary-color3);
     animation: change-color6 800ms 1;
     font-size: 0.98em;
     font-weight: 500;
@@ -193,7 +205,7 @@ justify-content: center;
         color:#b5d6df00;
     }
     100%{
-        color:#b5d6df
+        color:var(--primary-color3)
     }
 }
 
@@ -202,16 +214,16 @@ justify-content: center;
 }
 
 .courses-elem:hover .courses-elem-text, .students-elem:hover .students-elem-text, .tutors-elem:hover .tutors-elem-text{
-    color: #484848;
+    color: var(--primary-color2);
     animation: change-color5 150ms 1;
 }
 
 @keyframes change-color5 {
     0%{
-        color:#b5d6df;
+        color:var(--primary-color3);
     }
     100%{
-        color:#484848
+        color:var(--primary-color2);
     }
 }
 

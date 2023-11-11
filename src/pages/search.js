@@ -302,7 +302,7 @@ export default function Search(){
                         {data.map((kurs)=>{ i++; return <div key={`${i}`} className='result-elem-div'>
                             <div className='result-elem' onClick={()=>{redirect_course(kurs.courseID)}}> 
 
-                                <div className='course-img'><img src={require('../bilder/sfqt.jpg')} alt='course image' className='image'/></div>
+                                <div className='course-img'><img src={kurs.img} alt='course image' className='image'/></div>
                                 <div className='course-inf'>
                                     <div className='course-hoved-inf'>
                                             <div className='name'><p className='name-text'>{kurs.name}</p></div>
@@ -339,9 +339,9 @@ export default function Search(){
                     <tr>
                         {page_arr.map((page_number)=>{
                             return <td className={`page-number ${Number(page_query) === page_number ? 'selected-page-number' : ''}`} onClick={()=>{
-                                navigate(`/search?q=${search_query}&p=${page_number}&topic=${topic_query}&sort=${sort_query}&low_P=${min_P_query}&high_P=${max_P_query}&low_R=${min_R_query}&high_R=${max_R_query}`)
-                                window.location.reload();
+                                navigate(`/search?q=${search_query}&p=${page_number}&topic=${topic_query}&sort=${sort_query}&low_P=${min_P_query}&high_P=${max_P_query}&low_R=${min_R_query}&high_R=${max_R_query}`);
                                 window.scrollTo(0, 0);
+                                window.location.reload();
                             }}>{page_number}</td>
                         })}
                     </tr>
