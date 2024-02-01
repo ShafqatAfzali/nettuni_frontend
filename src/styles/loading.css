@@ -9,6 +9,7 @@
 }
 
 .loading-svg{
+    top: 150px;
     margin-top: 0px;
     height: 500px;
     width: 39%;
@@ -34,67 +35,55 @@
 }
 
 .loading-6{
-    stroke: rgba(24, 129, 204, 0);
     animation: loadinganim2 1000ms 1000;
     fill:rgba(24, 129, 204, 0);
 }
 
 @keyframes loadinganim2 {
     0%{
-    stroke: rgba(24, 129, 204, 0);
     fill: rgba(24, 129, 204, 0);
     }
 
     5%{
-        stroke: rgba(24, 129, 204, 0);
         fill: rgba(24, 129, 204, 0);
     }
 
     20%{
-    stroke: rgba(24, 129, 204, 1);
     fill: rgba(24, 129, 204, 1);
     }
     
     85%{
-        stroke: rgba(24, 129, 204, 1,0.1);
         fill: rgba(24, 129, 204, 1,0.1);
     }
 
     95%{
-        stroke: rgba(24, 129, 204, 0);
         fill: rgba(24, 129, 204, 0);
     }
 }
 
 .loading-7{
-    stroke: rgba(24, 129, 204, 0);
     animation: loadinganim3 1000ms 1000;
     fill:rgba(24, 129, 204, 0);
 }
 
 @keyframes loadinganim3 {
     0%{
-        stroke: rgba(24, 129, 204, 0);
         fill: rgba(24, 129, 204, 0);
     }
     
     15%{
-        stroke: rgba(24, 129, 204, 0);
         fill: rgba(24, 129, 204, 0);
     }
     
     40%{
-        stroke: rgba(24, 129, 204, 1);
         fill: rgba(24, 129, 204, 1);
     }
     
     95%{
-        stroke: rgba(24, 129, 204, 1,0.1);
         fill: rgba(24, 129, 204, 1,0.1);
     }
 
     100%{
-        stroke: rgba(24, 129, 204, 0);
         fill: rgba(24, 129, 204, 0);
     }
 }

@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import "../../styles/navbar.css"
@@ -6,32 +5,22 @@ import Login from "./login";
 
 import { useState, useEffect } from "react";
 
-export default function Navbar(){
+export default function Navbar({login,setlogin}){
     const navigate = useNavigate();
-    const [login,setlogin]=useState(false)
     const [signup, setsignup]=useState(false)
     const [vis_burger, setvis_burger]=useState(false)
-    const [brgr_style, setbrgr_style] = useState({display:"none"})
-
+    const [brg, setbgr] = useState(false)
 
     useEffect(()=>{
-        if(vis_burger){
+        if(window.innerWidth<=800){
 
-            setbrgr_style({ animation:"burger-ned 600ms 1", display:"grid" })
+            setbgr(false)
 
         } else{
-
-            setbrgr_style({ animation:"burger-opp 602ms 1", display:"grid"});
-
-            const timer1 = setTimeout(() => {
-                setbrgr_style({display:"none"})
-                return ()=>{clearTimeout(timer1)}
-            }, 600);
+            setbgr(true)
         }
 
-    },[vis_burger])
-
-    var brgr_anim = vis_burger ? {animation: "burger-meny-anim1 600ms 1", transform:"rotate(90deg)"} : {animation: "burger-meny-anim2 600ms 1"} ;
+    },[])
     
     return <div className="nav">
         
@@ -61,103 +50,36 @@ export default function Navbar(){
             
             <div className="navbar-right">
 
-                <div className="burger-meny-div" onClick={()=>{setvis_burger(!vis_burger)}}  style={brgr_anim}>
+                <div className="burger-meny-div">
                     <div className="burger-meny">
-                        <svg className="burger-meny svg" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg className="burger-meny-svg" onClick={()=>{setvis_burger(!vis_burger)}}  style={vis_burger ? {animation: "burger-meny-anim1 600ms 1", transform:"rotate(90deg)"} : {animation: "burger-meny-anim2 600ms 1"}} viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect x="5" y="9" width="40" height="6" rx="2" fill="#166FAE"/>
                             <rect x="5" y="20" width="40" height="6" rx="3" fill="#166FAE"/>
                             <rect x="5" y="34" width="40" height="6" rx="4" fill="#166FAE"/>
                         </svg>
                     </div>
                 </div>
-
-                <div className="navlist">
-
+                
+                <div className="navlist" style={brg? {display:"grid"} : vis_burger ? {display:"grid", animation:"ned-burger 600ms 1" } :{display: "grid", animation:"opp-burger 900ms 1", bottom:"100vh"}}>
                     <div className="navelem courses">
-                        <p className="nav-text">courses</p>
-                        
-                        <svg width="15" height="15" viewBox="0 0 18 18" fill="none" className="pil_ned-svg">
-                            <path d="M8 13L3.66987 1.75L12.3301 1.75L8 13Z" className="pil_ned pil-courses"/>
-                        </svg>
+                        <p className="nav-text">Courses</p>
+                        <div className="course-div">
+                            <div className="course-elem" onClick={()=>{navigate("/course/1")}}><p className="course-text">Calculus 1</p></div>
+                        </div>
+                    </div>
+                    
+                    <div className="navelem students" onClick={()=>{navigate("/students")}}>
+                        <p className="nav-text">Students</p>
+                    </div>
+                    
+                    <div className="navelem tutors" onClick={()=>{navigate("/teachers")}}>
+                        <p className="nav-text">Teachers</p>
+                    </div>
 
-                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" className="hover-rect-svg">
-                            <path d="M13.5755 4.31773C14.0286 2.94433 15.9714 2.94433 16.4245 4.31772L23.0103 24.28C23.3305 25.2505 22.6078 26.25 21.5859 26.25H8.41414C7.39225 26.25 6.6695 25.2505 6.98966 24.28L13.5755 4.31773Z" className="hover-rect"/>
-                        </svg>
-                        <div className="hover-sec hover-sec-courses">
-                            <div className="courses-elem">
-                                <p className="courses-elem-text">math</p>
-                            </div>
-                            <div className="courses-elem">
-                            <p className="courses-elem-text">physics</p>
-                            </div>
-                            <div className="courses-elem">
-                            <p className="courses-elem-text">chemistry</p>
-                            </div>
-                            <div className="courses-elem">
-                            <p className="courses-elem-text">engineering</p>
-                            </div>
-                            <div className="courses-elem">
-                            <p className="courses-elem-text">CS & IT</p>
-                            </div>
-                            <div className="courses-elem">
-                            <p className="courses-elem-text">biology</p>
-                            </div>
-                            <div className="courses-elem">
-                            <p className="courses-elem-text">medicine</p>
-                            </div>
-                            <div className="courses-elem">
-                            <p className="courses-elem-text">economics</p>
-                            </div>
-                            <div className="courses-elem">
-                            <p className="courses-elem-text">other</p>
-                            </div>
-                        </div>
+                    <div className="navelem about" onClick={()=>{navigate("/about")}}>
+                        <p className="nav-text">About</p>
                     </div>
-                    
-                    <div className="navelem students">
-                    <p className="nav-text">students</p>
-                    <svg width="15" height="15" viewBox="0 0 18 18" fill="none" className="pil_ned-svg">
-                            <path d="M8 13L3.66987 1.75L12.3301 1.75L8 13Z" className="pil_ned pil-students"/>
-                    </svg>
-                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" className="hover-rect-svg">
-                        <path d="M13.5755 4.31773C14.0286 2.94433 15.9714 2.94433 16.4245 4.31772L23.0103 24.28C23.3305 25.2505 22.6078 26.25 21.5859 26.25H8.41414C7.39225 26.25 6.6695 25.2505 6.98966 24.28L13.5755 4.31773Z" className="hover-rect"/>
-                    </svg>
-                    <div className="hover-sec hover-sec-students">
-                        <div className="students-elem">
-                            <p className="students-elem-text">buying courses</p>
-                        </div>
-                        <div className="students-elem">
-                            <p className="students-elem-text">sertificates</p>
-                        </div>
-                        <div className="students-elem">
-                            <p className="students-elem-text">course structure</p>
-                        </div>
-                        <div className="students-elem">
-                            <p className="students-elem-text">problems and solutions</p>
-                        </div>
-                    </div>
-                    </div>
-                    
-                    <div className="navelem tutors">
-                    <p className="nav-text">tutors</p>
-                    <svg width="15" height="15" viewBox="0 0 18 18" fill="none" className="pil_ned-svg">
-                            <path d="M8 13L3.66987 1.75L12.3301 1.75L8 13Z" className="pil_ned pil-tutors"/>
-                    </svg>
-                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" className="hover-rect-svg">
-                        <path d="M13.5755 4.31773C14.0286 2.94433 15.9714 2.94433 16.4245 4.31772L23.0103 24.28C23.3305 25.2505 22.6078 26.25 21.5859 26.25H8.41414C7.39225 26.25 6.6695 25.2505 6.98966 24.28L13.5755 4.31773Z" className="hover-rect"/>
-                    </svg>
-                    <div className="hover-sec hover-sec-tutors">
-                        <div className="tutors-elem">
-                            <p className="tutors-elem-text">creating courses</p>
-                        </div>
-                        <div className="tutors-elem">
-                            <p className="tutors-elem-text">earnings and payments</p>
-                        </div>
-                        <div className="tutors-elem">
-                            <p className="tutors-elem-text">requirements</p>
-                        </div>
-                    </div>
-                    </div>
+
                 </div>
 
                 <div className="login-signup-btn-nav">
@@ -169,144 +91,6 @@ export default function Navbar(){
                 </div>
             </div>
 
-        </div>
-
-        <div className="burger-meny-nav" style={brgr_style}>
-            <div className="empty"></div>
-            
-            <div className="burger-navelem burger-courses">
-                
-                <div className="burger-nav-text-div">
-                    <p className="burger-nav-text">courses &nbsp; &gt; </p>
-                </div>
-
-                <div className="burger-hover-sec burger-hover-sec-courses">
-                    <div className="empty-courses-elem"></div>
-
-                    <div className="burger-courses-elem">
-                        <div className="burger-text-div">
-                            <p className="burger-courses-elem-text">math</p>
-                        </div>
-                    </div>
-
-                    <div className="burger-courses-elem">
-                        <div className="burger-text-div">
-                            <p className="burger-courses-elem-text">physics</p>
-                        </div>
-                    </div>
-    
-                    <div className="burger-courses-elem">
-                        <div className="burger-text-div">
-                            <p className="burger-courses-elem-text">chemistry</p>
-                        </div>
-                    </div>
-
-                    <div className="burger-courses-elem">
-                        <div className="burger-text-div">
-                            <p className="burger-courses-elem-text">engineering</p>
-                        </div>
-                    </div>
-
-                    <div className="burger-courses-elem">
-                        <div className="burger-text-div">
-                            <p className="burger-courses-elem-text">CS & IT</p>
-                        </div>
-                    </div>
-
-                    <div className="burger-courses-elem">
-                        <div className="burger-text-div">
-                            <p className="burger-courses-elem-text">biology</p>
-                        </div>
-                    </div>
-
-                    <div className="burger-courses-elem">
-                        <div className="burger-text-div">
-                            <p className="burger-courses-elem-text">medicine</p>
-                        </div>
-                    </div>
-                    <div className="burger-courses-elem">
-                        <div className="burger-text-div">
-                            <p className="burger-courses-elem-text">economics</p>
-                        </div>
-                    </div>
-                    <div className="burger-courses-elem">
-                        <div className="burger-text-div">
-                            <p className="burger-courses-elem-text">other</p>
-                        </div>
-                    </div>
-        
-                </div>
-
-            </div>
-
-            <div className="burger-navelem burger-students">
-
-                <div className="burger-nav-text-div">
-                    <p className="burger-nav-text">students &nbsp; &gt; </p>
-                </div>
-
-                <div className="burger-hover-sec burger-hover-sec-students">
-                    
-                    <div className="empty-students-elem"></div>
-
-                    <div className="burger-students-elem">
-                        <div className="burger-text-div">
-                            <p className="burger-students-elem-text">buying courses</p>
-                        </div>
-                    </div>
-
-                    <div className="burger-students-elem">
-                        <div className="burger-text-div">
-                            <p className="burger-students-elem-text">Sertificates</p>
-                        </div>
-                    </div>
-
-                    <div className="burger-students-elem">
-                        <div className="burger-text-div">
-                            <p className="burger-students-elem-text">Course structure</p>
-                        </div>
-                    </div>
-
-                    <div className="burger-students-elem">
-                        <div className="burger-text-div">
-                            <p className="burger-students-elem-text">Problems and solutions</p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-
-            <div className="burger-navelem burger-tutors">
-
-                <div className="burger-nav-text-div">
-                    <p className="burger-nav-text">tutors &nbsp; &gt; </p>
-                </div>
-
-                <div className="burger-hover-sec burger-hover-sec-tutors">
-                    <div className="empty-tutors-elem"></div>
-
-                    <div className="burger-tutors-elem">
-                        <div className="burger-text-div">
-                            <p className="burger-tutors-elem-text">Creating courses</p>
-                        </div>
-                    </div>
-
-                    <div className="burger-tutors-elem">
-                        <div className="burger-text-div">
-                            <p className="burger-tutors-elem-text">Earnings and payment</p>
-                        </div>
-                    </div>
-
-                    <div className="burger-tutors-elem">
-                        <div className="burger-text-div">
-                            <p className="burger-tutors-elem-text">Requirements</p>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
         </div>
     
     </div>

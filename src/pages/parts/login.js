@@ -1,4 +1,3 @@
-import React from "react";
 import "../../styles/login.css"
 import Signup from "./signup"
 import {useState} from "react";
@@ -37,7 +36,7 @@ export default function Login({login, signup, setlogin, setsignup}){
                     <div className="login-google-img-div">
                         <img src={require('../../bilder/google.png')} alt="google image" className="login-google-img"/>
                     </div>
-                    <p className="login-google-text">Login with google</p>
+                    <p className="login-google-text">Continue with google</p>
                 </div>
             </div>
 
